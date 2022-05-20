@@ -50,8 +50,9 @@
 \DeclareStringOption[cs]{course}
 \DeclareStringOption[examiner not set]{examiner}
 \DeclareStringOption[supervisor not set]{supervisor}
-\DeclareStringOption[startdate not set]{startdate}
-\DeclareStringOption[enddate not set]{enddate}
+% \DeclareStringOption[startdate not set]{startdate} 
+\DeclareStringOption[date not set]{date}
+\DeclareStringOption[location not set]{location}
 \DeclareStringOption[standard]{covertype} % type of the coverpage: standard, ustuttdiss
 
 \DeclareStringOption[german]{language}
@@ -75,8 +76,8 @@
     \gdef\@labelSupvervisor{Supervisor}%
     %\gdef\@labelbetreuerin{Supervisor}%
     \gdef\@labelCourse{Course of Study}%
-    \gdef\@labelStartdate{Commenced}%
-    \gdef\@labelEnddate{Completed}%
+    % \gdef\@labelStartdate{Commenced}%
+    % \gdef\@labelEnddate{Completed}%
     \gdef\@labelUniversity{~\newline University of Stuttgart}%
     \gdef\@labelDept{Faculty of Computer Science}%
 
@@ -87,6 +88,7 @@
     \gdef\@labelTypeBachelor{Bachelorarbeit}%
     \gdef\@labelTypeMaster{Masterarbeit}%
     \gdef\@labelTypeProjectINF{Projekt-INF}%
+	\gdef\@labelTypeProjectST{Projekt-SimTech}%
     \gdef\@labelTypeFachstudie{Fachstudie}%
     \gdef\@labelTypeProzessanalyse{Prozessanalyse}%
 
@@ -126,8 +128,8 @@
     \gdef\@labelExaminer{Prüfer/in}%
     \gdef\@labelSupvervisor{Betreuer/in}%
     \gdef\@labelCourse{Studiengang}%
-    \gdef\@labelStartdate{Beginn am}%
-    \gdef\@labelEnddate{Beendet am}%
+    % \gdef\@labelStartdate{Beginn am}%
+    % \gdef\@labelEnddate{Beendet am}%
     \gdef\@labelUniversity{~\newline Universität Stuttgart}%
     \gdef\@labelDept{Fakultät Informatik, Elektrotechnik und Informationstechnik}%
 
@@ -136,6 +138,7 @@
     \gdef\@labelTypeBachelor{Bachelorarbeit}%
     \gdef\@labelTypeMaster{Masterarbeit}%
     \gdef\@labelTypeProjectINF{Projekt-INF}%
+	\gdef\@labelTypeProjectST{Projekt-SimTech}%
     \gdef\@labelTypeFachstudie{Fachstudie}%
     \gdef\@labelTypeProzessanalyse{Prozessanalyse}%
 
@@ -192,6 +195,7 @@
     \def\0{master}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeMaster}}{}
     \def\0{fachstudie}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeFachstudie}}{}
     \def\0{projectinf}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeProjectINF}}{}
+	\def\0{projectst}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeProjectST}}{}
     \def\0{prozessanalyse}\ifthenelse{\equal{\0}{\1}}{\gdef\@labelType{\@labelTypeProzessanalyse}}{}
 }
 
@@ -271,6 +275,7 @@
 % - \Titelblatt
 % - \Versicherung
 % (contain code from old diplomtitel.sty)
+% - \TTitelblatt
 % ------------------------------
 \newcommand{\Titelblatt}{%
     \cleardoublepage
@@ -313,7 +318,8 @@
 
                 \vbox to 70mm{
                         \begin{center}%
-                            \@labelInstitute
+                            \@labelInstitute\\%
+							~\newline\MCS@location, \MCS@date%
                         \end{center}
                         \vfill}%
 
@@ -325,7 +331,7 @@
                 \centerline{\fboxsep=0pt
                     \@USCCover@umrandet{\hbox to 100mm{\hfil
                                 \vbox to 60mm{\hsize=95mm\parindent=0pt
-                                        \vskip 10mm plus 30mm minus 7.5mm
+                                        \vskip 30mm plus 30mm minus 7.5mm
                                         \begin{center}\@setsize\large{14pt}\xiipt\@xiipt %%\large
                                             \ifx\MCS@number\empty
                                                 \@labelType
@@ -342,7 +348,7 @@
                                             \MCS@author
                                         \end{center}%
                                         \vskip 17.5mm plus 35mm minus 12.5mm}\hfil}}}%
-                \vskip 20mm %%%%%
+                \vskip 50mm %%%%%
 
                 \vbox to 15mm{%
                         \begin{USCCover@TBlist}%
@@ -356,10 +362,10 @@
                         \end{USCCover@TBlist}%
                         \vfill}%
                 \vbox to 70mm{%%%%% ==> 85 mm von oben
-                        \begin{USCCover@TBlist}%
-                            \item[\@labelStartdate:]\MCS@startdate
-                            \item[\@labelEnddate:]\MCS@enddate
-                        \end{USCCover@TBlist}%
+                        % \begin{USCCover@TBlist}%
+                        %     \item[\@labelStartdate:]\MCS@startdate
+                        %     \item[\@labelEnddate:]\MCS@enddate
+                        % \end{USCCover@TBlist}%
                         \vfill}%
 
                 \vss}\hss}%
@@ -399,3 +405,28 @@
     \ifthenelse{\equal{\USCCover@isTwoColumn}{\USCCover@true}}{\twocolumn}{}
 }
 \newcommand{\Affirmation}{\Versicherung}
+
+\newcommand{\TTitelblatt}{%
+\cleardoublepage
+\definecolor{anthrazit}{RGB}{62,68,76}
+\definecolor{mittelblau}{RGB}{0,81,158}
+\definecolor{hellblau}{RGB}{0,190,255}
+
+\def\0{english}
+\newcommand{\insertunilogo}{\ifx\MCS@language\0 \includegraphics[width=0.6\textwidth]{scientific-thesis-cover/images/logo_unis_en.png} \else \includegraphics[width=0.6\textwidth]{scientific-thesis-cover/images/logo_unis_de.png} \fi}
+
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+	%\node (current page.center){Zentrierter Text};
+	%\draw (current page.center) -- ++ (2,2);
+	\path[fill=mittelblau] (current page.center) ++(1cm,-5cm) circle (8cm);
+	\path[fill=white] (current page.center) ++(5.7cm,-10.4cm) circle (2cm) node{\includegraphics[width=2.5cm]{scientific-thesis-cover/images/CV_logo.pdf}};	
+	\path (current page.center) ++ (-5cm,-2cm) node[align=left,anchor=north west,text width=12cm,white] {\textsf{\huge\MCS@author}};
+	
+	\path (current page.center) ++ (-5cm,-4cm) node[align=left,anchor=north west,text width=14cm,white] {\baselineskip=30pt\textsf{\textbf{\huge\MCS@title}}\par};
+	
+	\path (current page.north west) ++ (1cm,-1cm) node[anchor=north west,inner sep = 0]{\insertunilogo};
+	\path (current page.north east) ++ (-1cm,-1cm) node[anchor=north east,inner sep = 0]{\includegraphics[width=5cm]{scientific-thesis-cover/images/_simtech.png}};
+\end{tikzpicture}
+}
+\newcommand{\CCoverpage}{\TTitelblatt}
