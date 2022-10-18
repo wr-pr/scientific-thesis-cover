@@ -49,6 +49,7 @@
 \DeclareStringOption[]{number} % running number
 \DeclareStringOption[cs]{course}
 \DeclareStringOption[examiner not set]{examiner}
+\DeclareStringOption[]{secondexaminer}
 \DeclareStringOption[supervisor not set]{supervisor}
 % \DeclareStringOption[startdate not set]{startdate} 
 \DeclareStringOption[date not set]{date}
@@ -72,6 +73,7 @@
 % ------------------------------
 \def\labelsenglish{
     \gdef\@labelExaminer{Examiner}%
+    \gdef\@labelSecondExaminer{2nd Examiner}%
     %\gdef\@labelprueferin{Examiner}%
     \gdef\@labelSupvervisor{Supervisor}%
     %\gdef\@labelbetreuerin{Supervisor}%
@@ -336,7 +338,7 @@
                                             \ifx\MCS@number\empty
                                                 \@labelType
                                             \else
-                                                \@labelType\ %% Nr.\,\MCS@number
+                                                \@labelType\ Nr.\,\MCS@number
                                             \fi
                                         \end{center}%
                                         \vskip 12.5mm plus 12.5mm minus 10mm
@@ -358,6 +360,11 @@
                 \vbox to 45mm{%
                         \begin{USCCover@TBlist}%
                             \item[\@labelExaminer:]\MCS@examiner
+                            \ifx\MCS@secondexaminer\empty
+                                %
+                            \else
+                                \item[\@labelSecondExaminer:]\MCS@secondexaminer
+                            \fi
                             \item[\@labelSupvervisor:]\MCS@supervisor
                         \end{USCCover@TBlist}%
                         \vfill}%
